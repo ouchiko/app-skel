@@ -1,0 +1,44 @@
+{
+    "name": "slim/slim-skeleton",
+    "description": "WATERHELL.COM",
+    "keywords": ["waterhell"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "James Holden",
+            "email": "ouchiko@gmail.com",
+            "homepage": "http://www.waterhell.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "slim/slim": "^3.1",
+        "slim/php-view": "^2.0",
+        "monolog/monolog": "^1.17",
+        "predis/predis": "^v1.1.1",
+        "jaybizzle/crawler-detect": "v1.2.61",
+        "commerceguys/intl": "v0.7.5",
+        "guzzlehttp/guzzle": "~6.0",
+        "sentry/sentry": "1.9.0",
+        "slim/twig-view": "2.4.0",
+        "tedivm/stash": "0.14.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.8 < 6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "trains\\controllers\\": "./app/trains/controllers/",
+            "trains\\models\\": "./app/trains/models/"
+        }
+    },
+    "config": {
+        "process-timeout" : 0
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public index.php",
+        "test": "phpunit"
+    }
+
+}

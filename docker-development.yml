@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  train-web:
+    volumes:
+      - ./src/public:/var/www/html/public
+    env_file:
+        - ./environment/development.env
+    ports:
+        - 88:80
+
+  train-phpfpm:
+    volumes:
+        - ./src:/var/www/html
+    env_file:
+        - ./environment/development.env

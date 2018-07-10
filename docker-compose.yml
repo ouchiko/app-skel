@@ -1,0 +1,59 @@
+version: '2'
+
+services:
+
+  ##
+  # PHP Processing.
+  #
+  train-phpfpm:
+    build:
+        context: .
+        dockerfile: ./containers/phpfpm/Dockerfile
+
+  ##
+  # redis
+  #
+  train-redis:
+    image: redis
+    restart: unless-stopped
+    env_file:
+        - ./environment/redis.env
+    volumes:
+      - ./store/redis:/data
+
+  # MEM CACHE INSTANCE
+  train-memcached:
+    image: memcached:alpine
+    restart: unless-stopped
+    ports:
+      - "11211:11211"
+
+  ##
+  # Front end web application
+  #
+  train-web:
+    build:
+        context: .
+        dockerfile: ./containers/web/Dockerfile
+    depends_on:
+        - train-phpfpm
+
+  train-mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: train-mysql
+    env_file:
+        - ./environment/mysql.env
+    volumes:
+        - ./store/mysql:/var/lib/mysql
+        - ./environment/mysql:/etc/mysql/conf.d
+        - ./store/logs/mysql:/var/log/mysql
+    ports:
+        - 3306:3306
+ ##
+  # Front end web application
+  #
+  train-cron:
+    build:
+        context: .
+        dockerfile: ./containers/scheduler/Dockerfile
